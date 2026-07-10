@@ -1,4 +1,4 @@
-const CarOption = require("../models/carOption");
+const CarOption = require("../models/CarOption");
 const ElectricCarOption = require("../models/EvCarOption");
 
 const createCarOption = async (req, res) => {
