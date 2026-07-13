@@ -57,7 +57,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001" ], // Next.js app'in adresi
+    origin: ["http://localhost:3000", "http://localhost:3001", "https://dostagider-ui.vercel.app" ], // Next.js app'in adresi
     credentials: true, // cookie gönderebilmek için
   }),
 );
