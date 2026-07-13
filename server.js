@@ -122,3 +122,5 @@ socket.init(server);
 server.listen(PORT, () => {
   console.log(`🚀 Server + Socket running on port ${PORT}`);
 });
+
+module.exports = app;
