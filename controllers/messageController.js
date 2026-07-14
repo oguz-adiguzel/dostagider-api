@@ -93,16 +93,26 @@ exports.sendMessage = async (req, res) => {
     ).populate("participants.user listing"); // listing modelini de dolduruyoruz ki frontend'de kırılmasın
 
     // 🔹 Socket emit
-    const io = getIO();
+   const io = getIO();
 
-    conversation.participants.forEach((p) => {
-      const participantId = typeof p.user === "object" ? p.user._id.toString() : p.user.toString();
+if (conversation && conversation.participants) {
+  conversation.participants.forEach((p) => {
+    // p.user nesne de olsa, düz string de olsa ID'sini kesin olarak ayıkla
+    let participantId;
+    if (p.user && p.user._id) {
+      participantId = p.user._id.toString();
+    } else if (p.user) {
+      participantId = p.user.toString();
+    }
 
-      // 1. 📢 Sol menünün anlık güncellenmesi için (Her iki tarafa da gitmeli)
+    if (participantId) {
+      // Konsola ne bastığımızı net görelim kral
+      console.log(`🚀 [SOCKET EMIT] Oda: ${participantId} | Mesaj: ${content}`);
+
+      // 1. Sol menü güncellemesi
       io.to(participantId).emit("conversationUpdated", conversation);
 
-      // 2. ✉️ Mesajın ekrana düşmesi için (Her iki tarafa da gönderiyoruz)
-      console.log("📤 newMessage emit →", participantId);
+      // 2. Anlık mesaj düşümü
       io.to(participantId).emit("newMessage", {
         _id: message._id,
         conversationId,
@@ -111,7 +121,11 @@ exports.sendMessage = async (req, res) => {
         content,
         createdAt: message.createdAt,
       });
-    });
+    } else {
+      console.log("⚠️ [SOCKET ERROR] Participant ID tespit edilemedi!", p);
+    }
+  });
+}
 
     // İsteği yapan frontend'e de cevabı dönüyoruz (Zaten yukarda socket'ten de beslenecek)
     res.status(201).json(message);
