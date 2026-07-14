@@ -157,14 +157,40 @@ const formatUptime = () => {
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
+// app.get("/", (req, res) => {
+//   res.json({
+//     status: "ok",
+//     service: "dostagider-api",
+//     version: "1.0.0",
+//     uptime: formatUptime(),
+//     message: "API is running",
+//     timestamp: new Date(),
+//   });
+// });
+
 app.get("/", (req, res) => {
-  res.json({
+  // Veritabanı bağlantı durumunu kontrol et (0: disconnected, 1: connected, 2: connecting, 3: disconnecting)
+  const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+
+  // Dinamik olarak dokümantasyon linkini oluştur
+  const protocol = req.headers["x-forwarded-proto"] || "http";
+  const host = req.get("host");
+  const docsUrl = `${protocol}://${host}/api-docs`;
+
+  res.status(200).json({
     status: "ok",
     service: "dostagider-api",
     version: "1.0.0",
-    uptime: formatUptime(),
-    message: "API is running",
-    timestamp: new Date(),
+    environment: process.env.NODE_ENV || "development",
+    uptime: `${Math.floor(process.uptime())}s`, // Dinamik çalışma süresi saniye cinsinden
+    timestamp: new Date().toISOString(),
+    database: {
+      status: dbStatus
+    },
+    links: {
+      documentation: docsUrl,
+      health: `${protocol}://${host}/`
+    }
   });
 });
 
