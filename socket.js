@@ -6,7 +6,7 @@ module.exports = {
   init: (server) => {
     io = new Server(server, {
       cors: {
-        origin: ["http://localhost:3000", "http://localhost:3001"],
+        origin: ["http://localhost:3000", "http://localhost:3001", "https://dostagider-ui.vercel.app"],
         credentials: true,
       },
     });
