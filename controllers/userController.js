@@ -100,7 +100,7 @@ const registerUser = async (req, res) => {
       <p>Merhaba ${isim},</p>
       <p>Doğrulama Kodunuz: <b>${verificationCode}</b></p>
       <p>Hesabınızı aktifleştirmek için aşağıdaki linke tıklayın:</p>
-      <a href="http://localhost:3000/verify?email=${email}&code=${verificationCode}" target="_blank">Hesabı Doğrula</a>
+      <a href="https://dostagider-ui.vercel.app/verify?email=${email}&code=${verificationCode}" target="_blank">Hesabı Doğrula</a>
     `;
 
     // Ethereal ile test mail gönder
@@ -341,7 +341,7 @@ const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    const resetLink = `http://localhost:3000/sifre-sifirla?token=${resetToken}&email=${email}`;
+    const resetLink = `https://dostagider-ui.vercel.app//sifre-sifirla?token=${resetToken}&email=${email}`;
 
     const mailHtml = `
       <h2>Şifre Sıfırlama</h2>
@@ -933,7 +933,7 @@ const registerCorporateUser = async (req, res) => {
       <p>Merhaba ${galeriAdi},</p>
       <p>Doğrulama Kodunuz: <b>${verificationCode}</b></p>
       <p>Hesabınızı aktifleştirmek için aşağıdaki linke tıklayın:</p>
-      <a href="http://localhost:3000/verify?email=${email}&code=${verificationCode}" target="_blank">Hesabı Doğrula</a>
+      <a href="https://dostagider-ui.vercel.app//verify?email=${email}&code=${verificationCode}" target="_blank">Hesabı Doğrula</a>
     `;
 
     // Ethereal ile test mail gönder

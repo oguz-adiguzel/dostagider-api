@@ -313,7 +313,7 @@ const createCarListing = async (req, res) => {
       title: "İlan yayınlandı",
       message: `${newListing.ilanNo} ilan numarası ile yayınlanmıştır.`,
       type: "listing",
-      link: `http://localhost:3000/ilan/${newListing.ilanNo}`,
+      link: `https://dostagider-ui.vercel.app//ilan/${newListing.ilanNo}`,
     });
 
     res.status(201).json({
