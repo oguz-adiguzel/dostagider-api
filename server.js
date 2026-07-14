@@ -111,7 +111,7 @@ app.use(
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001", "https://dostagider-ui.vercel.app" ], // Next.js app'in adresi
+    origin: ["http://localhost:3000", "http://localhost:3001", "https://dostagider-ui.vercel.app", "https://dostagider-admin.vercel.app" ], // Next.js app'in adresi
     credentials: true, // cookie gönderebilmek için
   }),
 );
