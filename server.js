@@ -39,13 +39,42 @@ const app = express();
 app.use(cookieParser());
 
 // MongoDB bağlantısı
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(async () => {
-    console.log("✅ MongoDB bağlantısı başarılı");
-    await initAdmin(); // ✅ Admin kontrolü burada yapılır
-  })
-  .catch((err) => console.error("❌ MongoDB bağlantı hatası:", err));
+// mongoose
+//   .connect(process.env.MONGO_URI)
+//   .then(async () => {
+//     console.log("✅ MongoDB bağlantısı başarılı");
+//     await initAdmin(); // ✅ Admin kontrolü burada yapılır
+//   })
+//   .catch((err) => console.error("❌ MongoDB bağlantı hatası:", err));
+
+
+const connectDB = require('./config/db'); // db.js yolunu kontrol et kral
+let adminInitialized = false; // Admin'in daha önce initialize edilip edilmediğini tutar
+
+// Express rotalarının (routes) hemen üstüne bu middleware'i ekle:
+app.use(async (req, res, next) => {
+  try {
+    // 1. Her istekte veritabanı bağlantısını garantile
+    await connectDB();
+
+    // 2. Eğer admin kontrolü henüz yapılmadıysa, ilk istekte aradan çıkaralım
+    if (!adminInitialized) {
+      try {
+        await initAdmin(); 
+        adminInitialized = true;
+        console.log("✅ İlk istekte Admin kontrolü başarıyla tamamlandı");
+      } catch (adminError) {
+        console.error("❌ Admin init hatası:", adminError);
+      }
+    }
+
+    next();
+  } catch (error) {
+    console.error("❌ Middleware Veritabanı Hatası:", error);
+    res.status(500).json({ error: "Veritabanı bağlantı hatası" });
+  }
+});
+
 
   
 
