@@ -1050,14 +1050,13 @@ const options = {
       description: "Dostagider.com uygulaması için API dokümantasyonu",
     },
     servers: [
-      {
-        // Vercel'e çıkınca dinamik çalışması için Vercel domainini de ekleyebilirsin
-        url: process.env.VERCEL 
-          ? `https://${process.env.VERCEL_URL}` 
-          : "http://localhost:5000",
-        description: process.env.VERCEL ? "Canlı Sunucu (Vercel)" : "Geliştirme sunucusu",
-      },
-    ],
+  {
+    url: process.env.VERCEL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : "http://localhost:5000",
+    description: process.env.VERCEL ? "Canlı Sunucu (Vercel)" : "Geliştirme sunucusu",
+  },
+],
     components: {
       securitySchemes: {
         bearerAuth: {
