@@ -81,28 +81,28 @@ app.use(async (req, res, next) => {
 connectRedis();
 
 
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerSpec = require("./swagger"); // Senin o yukarıda paylaştığın swagger.js dosyası
+// const swaggerUi = require("swagger-ui-express");
+// const swaggerSpec = require("./swagger"); // Senin o yukarıda paylaştığın swagger.js dosyası
 
-// Swagger UI ayarları (Vercel dosya sistemi engeline takılmamak için statik dosyaları CDN'den yüklüyoruz)
-const swaggerOptions = {
-  customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
-  customJs: [
-    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js"
-  ],
-  // Sayfa başlığı gibi özelleştirmeler istersen:
-  customSiteTitle: "Dostagider API Documentation"
-};
+// // Swagger UI ayarları (Vercel dosya sistemi engeline takılmamak için statik dosyaları CDN'den yüklüyoruz)
+// const swaggerOptions = {
+//   customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+//   customJs: [
+//     "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
+//     "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js"
+//   ],
+//   // Sayfa başlığı gibi özelleştirmeler istersen:
+//   customSiteTitle: "Dostagider API Documentation"
+// };
 
-// Swagger endpoint'ini bağla
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, swaggerOptions)
-);
+// // Swagger endpoint'ini bağla
+// app.use(
+//   "/api-docs",
+//   swaggerUi.serve,
+//   swaggerUi.setup(swaggerSpec, swaggerOptions)
+// );
 
 
 
